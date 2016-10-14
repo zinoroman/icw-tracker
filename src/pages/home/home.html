@@ -1,0 +1,87 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>ICW Tracker</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <h2 class="block-title">Фільтри</h2>
+
+    <ion-item>
+        <ion-label>Дата</ion-label>
+        <ion-datetime
+            displayFormat="DD/MM/YYYY"
+            [(ngModel)]="washingDataDate"
+            (ngModelChange)="getWashingData(washingDataDate)"
+            max="{{ currentDate }}"
+            doneText="Вибрати"
+            cancelText="Скасувати"
+        ></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-checkbox 
+            id="price2" 
+            name="price3"
+        ></ion-checkbox>
+        1
+        <ion-checkbox 
+            id="price2" 
+            name="price1"
+        ></ion-checkbox>
+        2
+        <ion-checkbox 
+            id="price2" 
+            name="price2"
+        ></ion-checkbox>
+        3
+    </ion-item>
+
+    <h2 class="block-title">Перелік записів</h2>
+
+    <div
+        *ngIf="!washingDataService['data'].length"
+    >Немає записів за {{ washingDataDate|date: 'dd.mm.y' }}</div>
+
+    <ion-card
+        *ngFor="let item of washingDataService['data']"
+        [navPush]="viewWashingDataPage"
+        [navParams]="{washingData: item}"
+    >
+        <ion-card-content>
+            <ion-list>
+                <ion-item>
+                    <div class="washing-info">
+                        <span class="washing-info__header">
+                            <ion-icon name="time"></ion-icon>
+                            <span class="washing-info__title">Час:</span>
+                        </span>
+                        <span class="washing-info__main">{{ item.date | date: 'HH:mm' }}</span>
+                    </div>
+                </ion-item>
+                <ion-item>
+                    <div class="washing-info">
+                        <span class="washing-info__header">
+                            <ion-icon name="car"></ion-icon>
+                            <span class="washing-info__title">Авто:</span>
+                        </span>
+                        <span>{{ item.carBrand }}</span>
+                    </div>
+                </ion-item>
+                <ion-item>
+                    <div class="washing-info">
+                        <span class="washing-info__header">
+                            <ion-icon name="pricetag"></ion-icon>
+                            <span class="washing-info__title">Ціна:</span>
+                        </span>
+                        <span>
+                            <span class="washing-info__main">{{ item.totalPrice }}</span>
+                            <span class="currency">грн.</span>
+                        </span>
+                    </div>
+                </ion-item>
+            </ion-list>
+
+        </ion-card-content>
+
+    </ion-card>
+</ion-content>

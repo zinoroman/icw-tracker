@@ -1,0 +1,167 @@
+<form 
+    [formGroup]="formWashing"
+    (submit)="onSubmit(formWashing)"
+    class="form"
+    [class.form-invalid]="!formWashing.valid && submitAttempt"
+>
+    <h2>Загальна інформація</h2>
+    
+    <ion-item
+        [class.ng-invalid]="!formWashing.controls.carID.valid && submitAttempt"
+        [class.ng-valid-select]="formWashing.controls.carID.valid"
+    >
+        <ion-label
+            for="carID"
+            stacked
+        >Марка авто</ion-label>
+        <ion-select
+            formControlName="carID"
+        >
+            <ion-option
+                *ngFor="let item of settingsCarsService['data']" 
+                value="{{ item.id }}"
+            >{{ item.brand }}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <div 
+        *ngIf="formWashing.controls.carID.dirty || submitAttempt"
+    >
+        <ion-item
+            class="error-box"
+            *ngIf="formWashing.controls.carID.hasError('required')"
+        >Заповніть поле</ion-item>
+    </div>
+
+    <ion-item 
+        [class.ng-invalid]="!formWashing.controls.boxID.valid && submitAttempt" 
+        [class.ng-valid-select]="formWashing.controls.boxID.valid"
+    >
+        <ion-label
+            stacked
+        >№ боксу</ion-label>
+        <ion-select
+            formControlName="boxID"
+        >
+            <ion-option 
+                value="1"
+            >1</ion-option>
+            <ion-option 
+                value="2"
+            >2</ion-option>
+            <ion-option 
+                value="3"
+            >3</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <div 
+        *ngIf="formWashing.controls.boxID.dirty || submitAttempt"
+    >
+        <ion-item
+            class="error-box"
+            *ngIf="formWashing.controls.boxID.hasError('required')"
+        >Заповніть поле</ion-item>
+    </div>
+
+    <h2>Ціни</h2>
+
+    <fieldset 
+        formGroupName="prices"
+    >
+        <ion-item>
+            <ion-label
+                for="price1"
+                stacked
+            >Ціна за мийку, грн</ion-label>
+            <ion-input 
+                type="number" 
+                id="price1" 
+                name="priceWashing" 
+                formControlName="priceWashing"
+                clearInput
+            ></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label 
+                for="price2" 
+                stacked
+            >Ціна за пилесмок, грн</ion-label>
+            <ion-input 
+                type="number" 
+                id="price2" 
+                name="priceVC" 
+                formControlName="priceVC" 
+                clearInput
+            ></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label
+                for="price3"
+                stacked
+            >Ціна за мотор, грн</ion-label>
+            <ion-input 
+                type="number" 
+                id="price3" 
+                name="priceEC" 
+                formControlName="priceEC"
+                clearInput
+            ></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label 
+                for="price4" 
+                stacked
+            >Ціна за додаткові послуги, грн</ion-label>
+            <ion-input
+                type="number"
+                id="price4"
+                name="priceAdditional"
+                formControlName="priceAdditional"
+                clearInput
+            ></ion-input>
+        </ion-item>
+
+        <div 
+            *ngIf="formWashing.controls.prices.dirty || submitAttempt"
+        >
+            <ion-item 
+                class="error-box" *ngIf="formWashing.controls.prices.hasError('washingPricesRequired')"
+            >Вкажіть хоча б одну ціну</ion-item>
+        </div>
+    </fieldset>
+    
+    <div class="button-group button-group--justify">
+        <button
+            ion-button
+            icon-left
+            type="submit"
+            color="secondary"
+        >
+            <ion-icon
+                name="add"
+            ></ion-icon>
+            <span 
+                *ngIf="washingData && washingData.id"
+            >Редагувати</span>
+            <span 
+                *ngIf="!washingData
+            ">Додати</span>
+        </button>
+
+        <button
+            ion-button
+            icon-left
+            type="button"
+            color="danger"
+            *ngIf="washingData && washingData.id"
+            (click)="removeWashingData()"
+        >
+            <ion-icon
+                name="close"
+            ></ion-icon>
+            <span>Видалити</span>
+        </button>
+    </div>
+</form>

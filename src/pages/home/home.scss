@@ -1,0 +1,12 @@
+.washing-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__header {
+        > ion-icon {
+            margin-right: .5em;
+            vertical-align: text-bottom;
+        }
+    }
+}

@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Налаштування
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <button ion-item [navPush]="settingsCarsPage">
+      <ion-icon name="car" item-left></ion-icon>
+      Авто
+    </button>
+    <button ion-item [navPush]="settingsBoxesPage">
+      <ion-icon name="square" item-left></ion-icon>
+      Бокси
+    </button>
+    <button ion-item [navPush]="aboutProgrammPage">
+      <ion-icon name="information-circle" item-left></ion-icon>
+      Про програму
+    </button>
+  </ion-list>
+</ion-content>

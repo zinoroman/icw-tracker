@@ -1,0 +1,40 @@
+<!--
+  Generated template for the SettingsCarsPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Марки авто</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <h2>Додати авто</h2>
+
+    <form [formGroup]="carsForm" (submit)="onSubmit()" class="form" [class.form-invalid]="!carsForm.valid && submitAttempt">
+        <ion-item>
+            <ion-label for="brand" stacked>Марка авто</ion-label>
+            <ion-input type="text" id="brand" name="brand" formControlName="brand" clearInput></ion-input>
+        </ion-item>
+        <button ion-button type="submit" color="secondary" full>
+            <ion-icon name="add"></ion-icon>
+            <span>Додати</span>
+        </button>
+    </form>
+
+    <h2>Додані авто</h2>
+
+    <ion-list>
+        <ion-item *ngFor="let item of settingsCarsService['data']">
+            <span class="car-name">{{ item.brand }}</span>
+            <button (click)="removeCar(item)" clear outline item-right>
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-item>
+    </ion-list>
+</ion-content>

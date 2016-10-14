@@ -1,0 +1,94 @@
+<!--
+  Generated template for the ViewWashingDataPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Перегляд</ion-title>
+        <ion-buttons end>
+            <button
+                ion-button
+                icon-only 
+                [navPush]="editWashingDataPage"
+                [navParams]="{washingData: washingData}"
+            >
+                <ion-icon name="md-create"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <ion-card>
+        <ion-card-content>
+            <h2 class="block-title">Загальна інформація:</h2>
+            <ion-list>
+                <ion-item>
+                    <div class="washing-info">
+                        <span class="washing-info__header">
+                            <ion-icon name="time"></ion-icon>
+                            <span class="washing-info__title">Час:</span>
+                        </span>
+                        <span class="washing-info__main">{{ washingData.date | date: 'd.M.yy HH:mm' }}</span>
+                    </div>
+                </ion-item>
+
+                <ion-item>
+                    <div class="washing-info">
+                        <span class="washing-info__header">
+                            <ion-icon name="car"></ion-icon>
+                            <span class="washing-info__title">Авто:</span>
+                        </span>
+                        <span>{{ washingData.carBrand }}</span>
+                    </div>
+                </ion-item>
+                
+                <ion-item>
+                    <div class="washing-info">
+                        <span class="washing-info__header">
+                            <ion-icon name="square"></ion-icon>
+                            <span class="washing-info__title">Бокс:</span>
+                        </span>
+                        <span>{{ washingData.boxID }}</span>
+                    </div>
+                </ion-item>
+            </ion-list>
+
+            <h2 class="block-title">Ціни:</h2>
+            
+            <ion-list>
+                <ion-item *ngFor="let item of washingData.prices | objectToIterable">
+                    <div class="washing-info">
+                        <span class="washing-info__header">
+                            <ion-icon name="pricetag"></ion-icon>
+                            <span class="washing-info__title">{{ item.key }}:</span>
+                        </span>
+                        <span>
+                            <span *ngIf="item.value">{{ item.value }}</span>
+                            <span *ngIf="!item.value">0</span>
+                            <span class="currency">грн.</span>
+                        </span>
+                    </div>
+                </ion-item>
+
+                <ion-item>
+                    <div class="washing-info">
+                        <span class="washing-info__header">
+                            <ion-icon name="pricetags"></ion-icon>
+                            <span class="washing-info__title">Фінальна ціна:</span>
+                        </span>
+                        <span>
+                            <span class="washing-info__main">{{ washingData.totalPrice }}</span>
+                            <span class="currency">грн.</span>
+                        </span>
+                    </div>
+                </ion-item>
+            </ion-list>
+
+        </ion-card-content>
+
+    </ion-card>
+</ion-content>
