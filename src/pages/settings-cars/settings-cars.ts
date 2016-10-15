@@ -26,7 +26,15 @@ export class SettingsCarsPage {
         this.submitAttempt = true;
 
         if (this.carsForm.valid) {
-            this.settingsCarsService.addCar(this.carsForm.value);
+            this.settingsCarsService.addCar(this.carsForm.value)
+                .subscribe((res) => {
+                    if (res.status === 'success') {
+                        this.settingsCarsService.data.unshift(res.data);
+                    }
+                    else if (res.status === 'error') {
+                        this.settingsCarsService.onApiError(res.statusText);
+                    }
+                }, this.settingsCarsService.onApiError);
         }
     }
 
@@ -38,9 +46,18 @@ export class SettingsCarsPage {
                 }, {
                     text: 'Так',
                     handler: () => {
-                        this.settingsCarsService.removeCar(car);
+                        this.settingsCarsService.removeCar(car)
+                            .subscribe((res) => {
+                                if (res.status === 'success') {
+                                    this.settingsCarsService.data.splice(this.settingsCarsService.data.indexOf(car), 1);
+                                }
+                                else if (res.status === 'error') {
+                                    this.settingsCarsService.onApiError(res.statusText);
+                                }
+                            }, this.settingsCarsService.onApiError);
+                    }
                 }
-            }]
+            ]
         });
 
         confirmRemoveAlert.present();

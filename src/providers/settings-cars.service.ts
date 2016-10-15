@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, RequestOptions } from '@angular/http';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { IServerResponse } from '../interfaces/server-response.interface';
 import { ICar } from '../interfaces/car.interface';
 import { BasicService } from './basic.service';
 
@@ -16,25 +17,24 @@ export class SettingsCarsService extends BasicService {
     }
 
     private init() {
-        this.getCars();
+        this.getCars()
+            .subscribe((res) => {
+                if (res.status === 'success') {
+                    this.data = res.data;
+                }
+                else if (res.status === 'error') {
+                    this.onApiError(res.statusText);
+                }
+            }, this.onApiError);
     }
 
-    private getCars() {
-        const getCarsRequest = this.http.get(this.apiURL)
+    private getCars(): Observable<IServerResponse<ICar[]>> {
+        return this.http.get(this.apiURL)
             .map(this.extractData)
             .catch(this.catchError);
-
-        getCarsRequest.subscribe((res) => {
-            if (res.status === 'success') {
-                this.data = res.data;   
-            }
-            else if (res.status === 'error') {
-                this.onApiError(res.statusText);
-            }
-        }, this.onApiError);
     }
 
-    public addCar(car) {
+    public addCar(car): Observable<IServerResponse<ICar>> {
         const body = `brand=${car.brand}`;
         const headers = new Headers({
             'Content-Type':  'application/x-www-form-urlencoded; charset=UTF-8' 
@@ -43,32 +43,14 @@ export class SettingsCarsService extends BasicService {
             headers: headers
         });
 
-        const postCarRequest = this.http.post(this.apiURL, body, options)
+        return this.http.post(this.apiURL, body, options)
             .map(this.extractData)
             .catch(this.catchError);
-
-        postCarRequest.subscribe((res) => {
-            if (res.status === 'success') {
-                this.data.unshift(res.data);
-            }
-            else if (res.status === 'error') {
-                this.onApiError(res.statusText);
-            }
-        }, this.onApiError);
     }
 
-    public removeCar(car: ICar) {
-        const deleteCarRequest = this.http.delete(`${this.apiURL}?id=${car.id}`)
+    public removeCar(car: ICar): Observable<IServerResponse<ICar>> {
+        return this.http.delete(`${this.apiURL}?id=${car.id}`)
             .map(this.extractData)
             .catch(this.catchError);
-
-        deleteCarRequest.subscribe((res) => {
-            if (res.status === 'success') {
-                this.data.splice(this.data.indexOf(car), 1);
-            }
-            else if (res.status === 'error') {
-                this.onApiError(res.statusText);
-            }
-        }, this.onApiError);
     }
 }
