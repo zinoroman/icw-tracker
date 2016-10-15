@@ -7,7 +7,7 @@ import { BasicService } from './basic.service';
 
 @Injectable()
 export class SettingsCarsService extends BasicService {
-    private apiURL: string = 'http://icw.tracker/test.php';
+    private apiURL: string = `${this.apiBaseURL}/test.php`;
     public data: ICar[] = [];
 
     constructor(private http: Http) {
@@ -23,8 +23,6 @@ export class SettingsCarsService extends BasicService {
         const getCarsRequest = this.http.get(this.apiURL)
             .map(this.extractData)
             .catch(this.catchError);
-
-        console.log(getCarsRequest);
 
         getCarsRequest.subscribe((res) => {
             if (res.status === 'success') {

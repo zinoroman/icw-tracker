@@ -7,10 +7,11 @@ import 'rxjs/add/operator/catch';
 import { BasicService } from './basic.service';
 import { IWashingData } from '../interfaces/washing-data.interface';
 import { IServerResponse } from '../interfaces/server-response.interface';
+import { ApiConfig } from '../config/api.config';
 
 @Injectable()
 export class WashingDataService extends BasicService {
-    private apiURL: string = 'http://icw.tracker/washingData.php';
+    private apiURL: string = `${this.apiBaseURL}/washingData.php`;
     public data: IWashingData[] = [];
 
     constructor(private http: Http) {
