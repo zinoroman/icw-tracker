@@ -27,11 +27,11 @@ export class HomePage {
     }
     
     private getWashingData(date: string) {
-        console.log(this.washingDataService.getWashingData(date));
         this.washingDataService.getWashingData(date)
             .subscribe((res) => {
                 if (res.status === 'success') {
                     this.washingDataService.data = res.data;
+                    this.washingDataService.updateStatistics();
                 }
                 else {
                     this.washingDataService.onApiError(res.statusText);

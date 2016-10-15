@@ -39,8 +39,13 @@
     <h2 class="block-title">Перелік записів</h2>
 
     <div
-        *ngIf="!washingDataService['data'].length"
+        *ngIf="!washingDataService.washingStatistics.carsPerDay"
     >Немає записів за {{ washingDataDate|date: 'dd.mm.y' }}</div>
+
+    <div *ngIf="washingDataService.washingStatistics.carsPerDay">
+        <div>Завершених мийок за день: {{ washingDataService.washingStatistics.carsPerDay }}</div>
+        <div>Зароблено за день: {{ washingDataService.washingStatistics.moneysPerDay }}</div>
+    </div>
 
     <ion-card
         *ngFor="let item of washingDataService['data']"

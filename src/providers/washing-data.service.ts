@@ -7,12 +7,17 @@ import 'rxjs/add/operator/catch';
 import { BasicService } from './basic.service';
 import { IWashingData } from '../interfaces/washing-data.interface';
 import { IServerResponse } from '../interfaces/server-response.interface';
+import { IWashingStatistics } from '../interfaces/washing-statistics.interface';
 import { ApiConfig } from '../config/api.config';
 
 @Injectable()
 export class WashingDataService extends BasicService {
     private apiURL: string = `${this.apiBaseURL}/washingData.php`;
     public data: IWashingData[] = [];
+    public washingStatistics: IWashingStatistics = {
+        moneysPerDay: 0,
+        carsPerDay: 0
+    };
 
     constructor(private http: Http) {
         super();
@@ -54,5 +59,20 @@ export class WashingDataService extends BasicService {
         return this.http.put(`${this.apiURL}?id=${washingData.id}`, body, requestOptions)
             .map(this.extractData)
             .catch(this.catchError);
+    }
+
+    public updateStatistics(): void {
+        this.washingStatistics.carsPerDay = this.data.length;
+
+        if (this.washingStatistics.carsPerDay) {
+            this.washingStatistics.moneysPerDay = this.data.reduce((
+                previousValue: number,
+                currentValue: IWashingData,
+                currentIndex: number,
+                array: IWashingData[]) => {
+
+                return previousValue + currentValue.totalPrice;
+            }, 0);
+        }
     }
 }

@@ -136,6 +136,7 @@ export class WashingDataFormComponent implements OnChanges {
     private onSuccessAddWashingData(res: IServerResponse<IWashingData>) {
         //Add data to our service
         this.washingDataService.data.unshift(res.data);
+        this.washingDataService.updateStatistics();
 
         //Navigate to page with washing details
         this.navCtrl.setRoot(this.viewWashingDataPage, {
@@ -162,6 +163,7 @@ export class WashingDataFormComponent implements OnChanges {
     private onSuccessRemoveWashingData() {
         const elementIndex = this.washingDataService.data.indexOf(this.washingData);
         this.washingDataService.data.splice(elementIndex, 1);
+        this.washingDataService.updateStatistics();
 
         this.navCtrl.setRoot(HomePage);
     }
@@ -181,7 +183,8 @@ export class WashingDataFormComponent implements OnChanges {
     private onSuccessUpdateWashingData(washingData: IWashingData) {
         const elementIndex = this.washingDataService.data.indexOf(this.washingData);
         this.washingDataService.data.splice(elementIndex, 1, washingData);
-
+        this.washingDataService.updateStatistics();
+        
         //Navigate to page with washing details
         this.navCtrl.setRoot(this.viewWashingDataPage, {
             washingData: washingData
