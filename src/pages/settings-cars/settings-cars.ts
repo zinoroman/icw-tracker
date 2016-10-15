@@ -10,6 +10,7 @@ import { ICar } from '../../interfaces/car.interface';
 export class SettingsCarsPage {
     private carsForm: FormGroup;
     private submitAttempt: boolean = false;
+    private isEditing: number = -1;
 
     constructor(private navCtrl: NavController, private formBuilder: FormBuilder, private settingsCarsService: SettingsCarsService, private alertCtrl: AlertController) {
         this.initForm();
@@ -61,5 +62,9 @@ export class SettingsCarsPage {
         });
 
         confirmRemoveAlert.present();
+    }
+
+    private editCar(car: ICar) {
+        this.isEditing = car.id;
     }
 }

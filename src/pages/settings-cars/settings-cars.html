@@ -16,25 +16,90 @@
 <ion-content padding>
     <h2>Додати авто</h2>
 
-    <form [formGroup]="carsForm" (submit)="onSubmit()" class="form" [class.form-invalid]="!carsForm.valid && submitAttempt">
+    <form 
+        [formGroup]="carsForm" 
+        (submit)="onSubmit()" 
+        class="form" 
+        [class.form-invalid]="!carsForm.valid && submitAttempt"
+    >
         <ion-item>
-            <ion-label for="brand" stacked>Марка авто</ion-label>
-            <ion-input type="text" id="brand" name="brand" formControlName="brand" clearInput></ion-input>
+            <ion-label 
+                for="brand" 
+                stacked
+            >Марка авто</ion-label>
+            <ion-input 
+                type="text" 
+                id="brand" 
+                name="brand" 
+                formControlName="brand" 
+                clearInput
+            ></ion-input>
         </ion-item>
-        <button ion-button type="submit" color="secondary" full>
-            <ion-icon name="add"></ion-icon>
+        <button 
+            ion-button 
+            type="submit" 
+            color="secondary" 
+            full
+        >
+            <ion-icon 
+                name="add"
+            ></ion-icon>
             <span>Додати</span>
         </button>
     </form>
 
     <h2>Додані авто</h2>
 
-    <ion-list>
-        <ion-item *ngFor="let item of settingsCarsService['data']">
-            <span class="car-name">{{ item.brand }}</span>
-            <button (click)="removeCar(item)" clear outline item-right>
-                <ion-icon name="close"></ion-icon>
-            </button>
-        </ion-item>
-    </ion-list>
+    <div>
+        <div 
+            ion-item 
+            *ngFor="let item of settingsCarsService['data']"
+        >
+            <div
+                *ngIf="isEditing === item.id"
+            >
+                <ion-input 
+                    value="{{ item.brand }}">
+                </ion-input>
+                <button 
+                    ion-button 
+                    (click)="removeCar(item)" 
+                    clear 
+                    outline 
+                    item-right
+                >
+                    <ion-icon 
+                        name="checkmark"
+                    ></ion-icon>
+                </button>
+            </div>
+            <div
+                *ngIf="isEditing !== item.id">
+                <span 
+                    class="car-name"
+                >{{ item.brand }}</span>
+                <button 
+                    ion-button 
+                    (click)="editCar(item)" 
+                    clear 
+                    outline 
+                    item-right
+                >
+                    <ion-icon 
+                        name="md-create"
+                    ></ion-icon>
+                </button>
+                <button 
+                    ion-button 
+                    (click)="removeCar(item)" 
+                    clear 
+                    outline 
+                    item-right>
+                    <ion-icon 
+                        name="close"
+                    ></ion-icon>
+                </button>
+            </div>
+        </div>
+    </div>
 </ion-content>
