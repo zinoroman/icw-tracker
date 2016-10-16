@@ -40,7 +40,7 @@
 
     <div
         *ngIf="!washingDataService.washingStatistics.carsPerDay"
-    >Немає записів за {{ washingDataDate|date: 'dd.mm.y' }}</div>
+    >Немає записів за {{ washingDataDate|date: 'dd.MM.y' }}</div>
 
     <div *ngIf="washingDataService.washingStatistics.carsPerDay">
         <div>Завершених мийок за день: {{ washingDataService.washingStatistics.carsPerDay }}</div>
