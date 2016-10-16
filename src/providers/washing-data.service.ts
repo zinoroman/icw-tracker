@@ -56,7 +56,7 @@ export class WashingDataService extends BasicService {
             'Content-Type':  'application/x-www-form-urlencoded; charset=UTF-8' 
         });
         console.log(body);
-        return this.http.put(`${this.apiURL}?id=${washingData.id}`, body, requestOptions)
+        return this.http.put(this.apiURL, body, requestOptions)
             .map(this.extractData)
             .catch(this.catchError);
     }
