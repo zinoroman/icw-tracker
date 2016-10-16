@@ -1,0 +1,57 @@
+<form 
+    [formGroup]="carsForm" 
+    (submit)="onSubmit()" 
+    class="form" 
+    [class.form-invalid]="!carsForm.valid && submitAttempt"
+>
+
+    <div *ngIf="car">
+        <ion-item>
+            <ion-input 
+                type="text" 
+                id="brand" 
+                name="brand" 
+                formControlName="brand" 
+                clearInput
+                [focus]="true"
+            ></ion-input>
+            <button 
+                ion-button 
+                clear 
+                outline 
+                item-right
+            >
+                <ion-icon 
+                    name="checkmark"
+                ></ion-icon>
+            </button>
+        </ion-item>
+    </div>
+
+    <div *ngIf="!car">
+        <ion-item>
+            <ion-label 
+                for="brand" 
+                stacked
+            >Марка авто</ion-label>
+            <ion-input 
+                type="text" 
+                id="brand" 
+                name="brand" 
+                formControlName="brand" 
+                clearInput
+            ></ion-input>
+        </ion-item>
+        <button 
+            ion-button 
+            type="submit" 
+            color="secondary" 
+            full
+        >
+            <ion-icon 
+                name="add"
+            ></ion-icon>
+            <span>Додати</span>
+        </button>
+    </div>
+</form>

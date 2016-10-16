@@ -13,7 +13,9 @@ import { ViewWashingDataPage } from '../pages/view-washing-data/view-washing-dat
 import { SettingsCarsService } from '../providers/settings-cars.service';
 import { WashingDataService } from '../providers/washing-data.service';
 import { WashingDataFormComponent } from '../components/washing-data-form/washing-data-form.component';
+import { SettingsCarsFormComponent } from '../components/settings-cars-form/settings-cars-form.component';
 import { ObjectToIterablePipe } from '../pipes/object-to-iterable.pipe';
+import { FocusDirective } from '../directives/focus.directive';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { ObjectToIterablePipe } from '../pipes/object-to-iterable.pipe';
     TabsPage,
     ViewWashingDataPage,
     WashingDataFormComponent,
-    ObjectToIterablePipe
+    SettingsCarsFormComponent,
+    ObjectToIterablePipe,
+    FocusDirective
   ],
   imports: [
     IonicModule.forRoot(MyApp)

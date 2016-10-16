@@ -53,4 +53,16 @@ export class SettingsCarsService extends BasicService {
             .map(this.extractData)
             .catch(this.catchError);
     }
+
+    public updateCar(car: ICar): Observable<IServerResponse<ICar>> {
+        console.log(car);
+        const body = `id=${car.id}&brand=${car.brand}`;
+        const requestOptions = new Headers({
+            'Content-Type':  'application/x-www-form-urlencoded; charset=UTF-8' 
+        });
+
+        return this.http.put(this.apiURL, body, requestOptions)
+            .map(this.extractData)
+            .catch(this.catchError);
+    }
 }
